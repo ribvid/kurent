@@ -52,7 +52,7 @@ html, body {
 #lives {
     position: absolute;
     top: 10%;
-    margin-top: 50px;
+    margin-top: 10%;
     padding: 1%;
     background-color: black;
     color: white;
