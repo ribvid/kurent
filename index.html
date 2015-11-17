@@ -2,7 +2,7 @@
 <html>
 	<head>
 	    <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
-	    <title>Babylon - Getting Started</title>
+	    <title>Kurent gre v nebesa</title>
 	    <script src="babylon.js"></script>
 		<script src="dist/Oimo.js"></script>
 		<script src="materialsLibrary/dist/babylon.waterMaterial.js"></script>
@@ -14,7 +14,7 @@
 	    <div id="time" class="hidden">Čas: <time>00:00:00</time></div>
 	    <div id="lives" class="hidden">Število življenj<br>Smrtnjak: 10<br>Kurent: 10</div>
 	    <div id="hit" class="hidden"></div>
-	    <div id="instructions" class="hidden">Kurent pride do reke, ob kateri raste jablana. Čez reko lahko pride samo tako, da premaga Smrt, ki jo varuje. V pomoč pri tem ti bo knjiga, ki jo boš našel v okolici.</div>
+	    <div id="instructions" class="hidden">Kurent mora nadaljevati pot preko reke. Vendar naloga ne bo lahka. Za več informacij poišči knjigo in klikni nanjo! (Kurenta upravljate s smernimi tipkami in miško.)</div>
 	    <div id="gameOver" class="hidden">
         	<div id="gameOverText">Konec igre! Čas - <time>00:00:00</time>. Klikni za ponovno igranje ...</div>
     	</div>
@@ -22,7 +22,7 @@
         	<div id="winText">Zmaga!</div>
     	</div>
     	<div id="bookInstructions" class="hidden">
-    		<p>Prehod čez reko varuje Smrt. Tvoja naloga je, da se ji približaš in klikneš nanjo.<br>
+    		<p>Prehod čez reko varuje Smrt, ki jo boš našel ob jablani. Tvoja naloga je, da se ji približaš in klikneš nanjo.<br>
     			Če jo želiš premagati, boš moral uporabiti eno izmed orožij, ki jih imaš s seboj. Vendar ne pozabi, da imaš na razpolago štiri orožja, Smrt pa lahko ukaniš le z enim poskusom!<br><br>
     			V pomoč pri izbiri pravega orožja ti bodo prišle spodnje tri informacije:<br>
     			1. Smrt je gluha.<br>
@@ -45,6 +45,7 @@
     					document.getElementById("story").className = "hidden";
     					document.getElementById("instructions").className = "";
     					document.getElementById("time").className = "";
+    					rabbit();
     					timer();
     			}
     			page++;
