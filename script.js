@@ -58,11 +58,58 @@ if (BABYLON.Engine.isSupported()) {
 	ground.material = materialGround;
 	ground.checkCollisions = true;
 
+	// Hills & Fences
+	createHills(-1000, 0, 0);
+	createHills(1000, 0, 0);
+	createHills(0, 0, -1000);
+	createHills(0, 0, 1000);
+	function createHills(x, y, z) {
+		if(z === 0) {
+			var hills = BABYLON.Mesh.CreateGroundFromHeightMap("hills", "textures/heightmap.png", 50, 2000, 400, 0, 10, scene, false);
+		} else {
+			var hills = BABYLON.Mesh.CreateGroundFromHeightMap("hills", "textures/heightmap.png", 2000, 50, 400, 0, 10, scene, false);
+		}
+		var hillsMaterial = new BABYLON.StandardMaterial("hillsMaterial", scene);
+		hillsMaterial.diffuseTexture = new BABYLON.Texture("grass.jpg", scene);
+		hillsMaterial.diffuseTexture.uScale = 100.0;
+		hillsMaterial.diffuseTexture.vScale = 100.0;
+		hillsMaterial.specularColor = new BABYLON.Color3(0, 0, 0);
+		hills.material = hillsMaterial;
+		if(x < 0) {
+			hills.position.x = x - 20;
+		} else {
+			hills.position.x = x + 20;
+		}
+		hills.position.y = y;	
+		if(z < 0) {
+			hills.position.z = z - 20;
+		} else {
+			hills.position.z = z + 20;
+		}	
+
+		// Fence East
+		var fence = BABYLON.Mesh.CreateBox("fence", 5.0, scene);
+		if(z === 0) {
+			fence.scaling.z = 400;
+			fence.scaling.x = 0.5;
+		} else {
+			fence.scaling.z = 0.5;
+			fence.scaling.x = 400;
+		}
+		fence.position.x = x;
+		fence.position.y = y;
+		fence.position.z = z;
+		var fenceEast = new BABYLON.StandardMaterial("fenceEast", scene);
+		fenceEast.diffuseTexture = new BABYLON.Texture("textures/fence.jpg", scene);
+		fence.material = fenceEast;
+		fence.checkCollisions = true;
+	}
+
 	// Tree
 	// The function ImportMesh will import our custom model in the scene given in parameter
 	BABYLON.SceneLoader.ImportMesh("", "assets/", "tree.babylon", scene, function (newMeshes) {
 		var tree = newMeshes[0]; 
-		tree.material = new BABYLON.StandardMaterial("tree", scene);
+		// tree.material = new BABYLON.StandardMaterial("tree", scene);
 		tree.scaling = new BABYLON.Vector3(0.15, 0.15, 0.15);
 		tree.position.x = -15.0;
 	});
@@ -91,6 +138,32 @@ if (BABYLON.Engine.isSupported()) {
 	obstacleMaterial.alpha = 0.0;
 	obstacle.material = obstacleMaterial;
 	obstacle.checkCollisions = true;
+
+	// Boat
+	BABYLON.SceneLoader.ImportMesh("", "assets/", "vessel.babylon", scene, function (newMeshes) {
+		var boat = newMeshes[0]; 
+		boat.position.z = 35.0;
+		boat.position.x = 40.0;
+		boat.position.y = 2.0;
+		
+		var animationBoatX = new BABYLON.Animation("boatAnimation", "position.x", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+		var keysX = [];
+		keysX.push({ frame: 0, value: 40.0 });
+		keysX.push({ frame: 60, value: 45.0 });
+		keysX.push({ frame: 120, value: 40.0 });
+		animationBoatX.setKeys(keysX);
+
+		var animationBoatZ = new BABYLON.Animation("boatAnimation", "position.z", 30, BABYLON.Animation.ANIMATIONTYPE_FLOAT, BABYLON.Animation.ANIMATIONLOOPMODE_CYCLE);
+		var keysZ = [];
+		keysZ.push({ frame: 0, value: 35.0 });
+		keysZ.push({ frame: 60, value: 40.0 });
+		keysZ.push({ frame: 120, value: 35.0 });
+		animationBoatZ.setKeys(keysZ);
+
+		boat.animations.push(animationBoatX);
+		boat.animations.push(animationBoatZ);
+		scene.beginAnimation(boat, 0, 120, true);
+	});
 
 	// Skeleton
 	BABYLON.SceneLoader.ImportMesh("", "assets/", "skeleton.babylon", scene, function (newMeshes) {
@@ -135,7 +208,7 @@ if (BABYLON.Engine.isSupported()) {
 	var hits = 10;
 	var fightStarted = false;
 	var smrtnjakHits;
-	window.addEventListener("keydown", function(evt) {
+	window.addEventListener("keyup", function(evt) {
 		if(evt.keyCode === 13) {
 			fightStarted = true;
 			smrtnjakHits = setInterval(function(){ 
