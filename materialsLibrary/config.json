@@ -1,0 +1,47 @@
+{
+  "materials": [
+    {
+      "file": "materials/normal/babylon.normalMaterial.ts",
+      "shaderFiles": [
+        "materials/normal/normal.vertex.fx",
+        "materials/normal/normal.fragment.fx"
+      ],
+      "output": "babylon.normalMaterial.js"
+    },
+    {
+      "file": "materials/lava/babylon.lavaMaterial.ts",
+      "shaderFiles": [
+        "materials/lava/lava.vertex.fx",
+        "materials/lava/lava.fragment.fx"
+      ],
+      "output": "babylon.lavaMaterial.js"
+    },
+    {
+      "file": "materials/simple/babylon.simpleMaterial.ts",
+      "shaderFiles": [
+        "materials/simple/simple.vertex.fx",
+        "materials/simple/simple.fragment.fx"
+      ],
+      "output": "babylon.simpleMaterial.js"
+    },
+    {
+      "file": "materials/water/babylon.waterMaterial.ts",
+      "shaderFiles": [
+        "materials/water/water.vertex.fx",
+        "materials/water/water.fragment.fx"
+      ],
+      "output": "babylon.waterMaterial.js"
+    },
+    {
+      "file": "materials/fire/babylon.fireMaterial.ts",
+      "shaderFiles": [
+        "materials/fire/fire.vertex.fx",
+        "materials/fire/fire.fragment.fx"
+      ],
+      "output": "babylon.fireMaterial.js"
+    }
+  ],
+  "build": {
+    "distOutputDirectory": "dist/"
+  }
+}

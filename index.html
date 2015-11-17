@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+	    <title>Babylon - Getting Started</title>
+	    <script src="babylon.js"></script>
+		<script src="dist/Oimo.js"></script>
+		<script src="materialsLibrary/dist/babylon.waterMaterial.js"></script>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+	    <canvas id="renderCanvas"></canvas>
+	    <div id="story"></div>
+	    <div id="time" class="hidden">Čas: <time>00:00:00</time></div>
+	    <div id="lives" class="hidden">Število življenj<br>Smrtnjak: 10<br>Kurent: 10</div>
+	    <div id="hit" class="hidden"></div>
+	    <div id="instructions" class="hidden">Kurent pride do reke, ob kateri raste jablana. Čez reko lahko pride samo tako, da premaga Smrt, ki jo varuje. V pomoč pri tem ti bo knjiga, ki jo boš našel v okolici.</div>
+	    <div id="gameOver" class="hidden">
+        	<div id="gameOverText">Konec igre! Čas - <time>00:00:00</time>. Klikni za ponovno igranje ...</div>
+    	</div>
+    	<div id="win" class="hidden">
+        	<div id="winText">Zmaga!</div>
+    	</div>
+    	<div id="bookInstructions" class="hidden">
+    		<p>Prehod čez reko varuje Smrt. Tvoja naloga je, da se ji približaš in klikneš nanjo.<br>
+    			Če jo želiš premagati, boš moral uporabiti eno izmed orožij, ki jih imaš s seboj. Vendar ne pozabi, da imaš na razpolago štiri orožja, Smrt pa lahko ukaniš le z enim poskusom!<br><br>
+    			V pomoč pri izbiri pravega orožja ti bodo prišle spodnje tri informacije:<br>
+    			1. Smrt je gluha.<br>
+    			2. Smrt se ne more usesti ali uleči.<br>
+    			3. Smrti ne moreš ubiti.<br><br>
+    			S klikom na okno lahko zapreš knjigo.</p>
+    	</div>
+    	<div id="weapons"></div>
+    	<script>
+    		var page = 0;
+    		story.addEventListener("click", function() {
+    			switch (page) {
+    				case 0:
+    					document.getElementById("story").style.backgroundImage = "url('textures/story.jpg')";
+    					break;
+    				case 1:
+    					document.getElementById("story").style.backgroundImage = "url('textures/story2.jpg')";
+    					break;
+    				case 2:
+    					document.getElementById("story").className = "hidden";
+    					document.getElementById("instructions").className = "";
+    					document.getElementById("time").className = "";
+    					timer();
+    			}
+    			page++;
+    		});
+
+    		var seconds = 0, minutes = 0, hours = 0, t;
+    		function add() {
+				seconds++;
+				if(seconds >= 60) {
+					minutes++;
+					seconds = 0;
+					if(minutes >= 60) {
+						hours++;
+						minutes = 0;
+					}
+				}
+				time.textContent = "Čas: " + (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+				timer();
+			}
+
+			function timer() {
+				t = setTimeout(add, 1000);
+			}
+    	</script>
+    	<script src="script.js"></script>
+	</body>
+</html>
