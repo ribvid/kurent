@@ -13,6 +13,7 @@ if (BABYLON.Engine.isSupported()) {
 
 	// Camera
 	var camera = new BABYLON.FreeCamera("FreeCamera", new BABYLON.Vector3(0, 5, -50), scene);
+	camera.rotation.y = Math.PI;
 	camera.attachControl(canvas, true);
 	camera.speed = 1.0;
 	scene.activeCamera.keysUp.push(87); // W
@@ -109,7 +110,6 @@ if (BABYLON.Engine.isSupported()) {
 	// Book
 	BABYLON.SceneLoader.ImportMesh("", "assets/", "book.babylon", scene, function (newMeshes) {
 		book = newMeshes[0]; 
-		book.material = new BABYLON.StandardMaterial("book", scene);
 		book.position.x = 100.0;
 		book.position.z = -50.0;
 		book.actionManager = new BABYLON.ActionManager(scene);
@@ -122,7 +122,6 @@ if (BABYLON.Engine.isSupported()) {
 	var smrtnjak;
 	BABYLON.SceneLoader.ImportMesh("", "assets/", "skeleton2.babylon", scene, function (newMeshes) {
 		smrtnjak = newMeshes[0]; 
-		smrtnjak.material = new BABYLON.StandardMaterial("smrtnjak", scene);
 		smrtnjak.position.z = 80.0;
 		smrtnjak.position.y = 5.0;
 		smrtnjak.rotation.y = 0.35;
@@ -162,7 +161,35 @@ if (BABYLON.Engine.isSupported()) {
 			}
 		}
 	});
-	
+
+	// Rabbit
+	var rabbit = function () {
+		BABYLON.SceneLoader.ImportMesh("", "assets/", "rabbit.babylon", scene, function (newMeshes) {
+			var rabbit = newMeshes[0]; 
+			rabbit.position.z = -90.0;
+			rabbit.position.x = -40.0;
+		    var hop = true;
+		    var frame = 0;
+		    scene.registerBeforeRender(function () {
+			    if(frame >= 60) {
+			    	rabbit.position.x += 0.5;
+			    	if(hop === true) {
+			    		rabbit.position.y += 0.3;
+			    		if(frame >= 62) {
+			    			hop = false;
+			    		}
+			    	}  else {
+			    		rabbit.position.y -= 0.3;
+			    		if(frame >= 65) {
+			    			hop = true;
+			    			frame = 0;
+			    		}
+			    	}
+			    }
+		    	frame++;
+		    });
+		});
+	}
 
 	// Register a render loop to repeatedly render the scene
 	engine.runRenderLoop(function () {
